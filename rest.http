@@ -7,7 +7,7 @@ Content-Type: application/json
   "company":"Some address Sydney",
   "address":"hugito del carril",
   "phone":123456,
-  "email":"gaby@gmail.com",
+  "email":"gsz@gmail.com",
   "password":"password"
 }
 
@@ -16,6 +16,6 @@ POST http://localhost:3001/v1/user/login
 Content-Type: application/json
 
 {
-  "email":"gaby@gmail.com",
-  "password":"passwoard"
+  "email":"gsz@gmail.com",
+  "password":"password"
 }
