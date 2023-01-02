@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { insertUser, getUserByEmail } = require('../models/user/User.model')
 const { hashPassword, comparePassword } = require('../helpers/bcrypt.helper')
+const { createAccessJWT, createRefreshJWT } = require('../helpers/jwt.helper')
 
 router.all('/', (req, res, netx) => {
   // res.json({ message: 'Return form user router' })
@@ -43,10 +44,7 @@ router.post('/login', async (req, res) => {
     return res.json({ status: 'error', message: 'Invalid form submition!' })
   }
 
-  // get user with email from db
   const user = await getUserByEmail(email)
-  console.log(user)
-
   const passFromDb = user && user._id ? user.password : null
 
   if (!passFromDb)
@@ -55,7 +53,19 @@ router.post('/login', async (req, res) => {
   const result = await comparePassword(password, passFromDb)
   console.log(result)
 
-  res.json({ status: 'success', message: 'Login Successfully!' })
+  if (!result) {
+    return res.json({ status: 'error', message: 'Invalid email or password!' })
+  }
+
+  const accessJWT = await createAccessJWT(user.email)
+  const refreshJWT = await createRefreshJWT(user.email)
+
+  res.json({
+    status: 'success',
+    message: 'Login Successfully!',
+    accessJWT,
+    refreshJWT
+  })
 })
 
 module.exports = router
