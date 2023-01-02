@@ -1,0 +1,21 @@
+### User sing up endpoint
+POST http://localhost:3001/v1/user
+Content-Type: application/json
+
+{
+  "name":"Gaby",
+  "company":"Some address Sydney",
+  "address":"hugito del carril",
+  "phone":123456,
+  "email":"gaby@gmail.com",
+  "password":"password"
+}
+
+### User sing in endpoint
+POST http://localhost:3001/v1/user/login
+Content-Type: application/json
+
+{
+  "email":"gaby@gmail.com",
+  "password":"passwoard"
+}
